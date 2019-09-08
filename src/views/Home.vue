@@ -30,8 +30,12 @@ export default {
   computed: {
     ...mapState([
       'photos',
-      'isLoading'
+      'isLoading',
+      'searchTotal'
     ])
+  },
+  mounted () {
+    this.onScroll()
   },
   methods: {
     ...mapActions([
@@ -43,6 +47,16 @@ export default {
         this.searchPhotos(payload)
         this.searchQuery = searchQuery
         this.page = page
+      }
+    },
+    onScroll () {
+      window.onscroll = () => {
+        let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight
+        if (this.photos.length <= this.searchTotal && bottomOfWindow && !this.isLoading) {
+          const payload = { searchQuery: this.searchQuery, page: this.page + 1 }
+          this.searchPhotos(payload)
+          this.page = this.page + 1
+        }
       }
     }
 

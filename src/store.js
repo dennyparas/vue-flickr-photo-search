@@ -36,8 +36,9 @@ export default new Vuex.Store({
   },
   actions: {
     async searchPhotos ({ commit, state }, payload) {
+      if (state.error) commit('clearError')
+      if (payload.page === 1) commit('setPhotos', [])
       try {
-        if (state.error) commit('clearError')
         commit('setLoading', true)
         const res = await axios.get('/rest/', {
           params: {
