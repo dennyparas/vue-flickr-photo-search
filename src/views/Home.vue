@@ -1,12 +1,20 @@
 <template>
-  <photo-search-form
-    @photoSearch="handlePhotoSearch"
-  />
+  <div>
+    <photo-search-form
+      @photoSearch="handlePhotoSearch"
+      :isLoading="isLoading"
+    />
+    <photo-list
+      :photos="photos"
+      :isLoading="isLoading"
+    />
+  </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import PhotoSearchForm from '@/components/PhotoSearchForm'
+import PhotoList from '@/components/PhotoList'
 export default {
   name: 'home',
   data () {
@@ -16,7 +24,14 @@ export default {
     }
   },
   components: {
-    PhotoSearchForm
+    PhotoSearchForm,
+    PhotoList
+  },
+  computed: {
+    ...mapState([
+      'photos',
+      'isLoading'
+    ])
   },
   methods: {
     ...mapActions([
