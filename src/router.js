@@ -14,7 +14,7 @@ export default new Router({
       component: Home
     },
     {
-      path: '/photo/:id',
+      path: '/photo/:id/:secret',
       name: 'photo-details',
       component: () => import('./views/PhotoDetails.vue')
     }

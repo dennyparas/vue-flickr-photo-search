@@ -8,6 +8,7 @@
         overlay
         class="mb-2"
         text-variant="white"
+        @click="goToDetails(photo.id, photo.secret)"
       >
     <b-card-text>
       By: {{ photo.owner }}
@@ -24,6 +25,11 @@ export default {
     photo: {
       type: Object,
       required: true
+    }
+  },
+  methods: {
+    goToDetails (id, secret) {
+      this.$router.push({ path: `/photo/${id}/${secret}` })
     }
   }
 }
