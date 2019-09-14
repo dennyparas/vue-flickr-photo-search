@@ -16,25 +16,25 @@ export default new Vuex.Store({
     photoDetails: {}
   },
   mutations: {
-    setSearchQuery (state, query) {
+    setSearchQuery(state, query) {
       state.searchQuery = query
     },
-    setPageNumber (state, page) {
+    setPageNumber(state, page) {
       state.page = page
     },
-    setPhotos (state, data) {
+    setPhotos(state, data) {
       state.photos = data
     },
-    setPhotoDetails (state, data) {
+    setPhotoDetails(state, data) {
       state.photoDetails = data
     },
-    setLoading (state, status) {
+    setLoading(state, status) {
       state.isLoading = status
     },
-    setSearchTotal (state, data) {
+    setSearchTotal(state, data) {
       state.searchTotal = data
     },
-    setError (state, message) {
+    setError(state, message) {
       state.searchQuery = ''
       state.page = 1
       state.isLoading = false
@@ -44,18 +44,18 @@ export default new Vuex.Store({
       state.error = true
       state.errorMessage = message
     },
-    clearError (state) {
+    clearError(state) {
       state.error = false
       state.errorMessage = null
     }
   },
   actions: {
-    async searchPhotos ({ commit, state }, payload) {
+    async searchPhotos({ commit, state }, payload) {
       if (state.error) commit('clearError')
 
       try {
         commit('setLoading', true)
-        const res = await axios.get('/rests/', {
+        const res = await axios.get('/rest/', {
           params: {
             api_key: process.env.VUE_APP_FLICKR_API_KEY,
             method: 'flickr.photos.search',
@@ -87,7 +87,7 @@ export default new Vuex.Store({
         commit('setError', error.message)
       }
     },
-    async getPhotoDetails ({ commit, state }, payload) {
+    async getPhotoDetails({ commit, state }, payload) {
       if (state.error) commit('clearError')
       try {
         commit('setLoading', true)
