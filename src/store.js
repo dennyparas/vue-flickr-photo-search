@@ -45,17 +45,17 @@ export default new Vuex.Store({
       state.errorMessage = message
     },
     clearError (state) {
-      state.error = true
+      state.error = false
       state.errorMessage = null
     }
   },
   actions: {
     async searchPhotos ({ commit, state }, payload) {
       if (state.error) commit('clearError')
-      if (payload.page === 1) commit('setPhotos', [])
+
       try {
         commit('setLoading', true)
-        const res = await axios.get('/rest/', {
+        const res = await axios.get('/rests/', {
           params: {
             api_key: process.env.VUE_APP_FLICKR_API_KEY,
             method: 'flickr.photos.search',
@@ -72,6 +72,7 @@ export default new Vuex.Store({
         })
         if (res) {
           if (payload.page === 1) {
+            commit('setPhotos', [])
             commit('setSearchQuery', payload.searchQuery)
             commit('setPageNumber', payload.page)
             commit('setPhotos', res.data.photos.photo)
