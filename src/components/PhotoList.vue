@@ -1,6 +1,6 @@
 <template>
-<b-container id="infinite-list">
-    <b-row>
+<b-container id="infinite-list" >
+    <b-row v-if="photos.length > 0">
       <photo-item
         v-for="(photo, i) in photos"
         :key="`${i}-${photo.id}`"

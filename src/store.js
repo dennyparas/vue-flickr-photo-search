@@ -16,25 +16,25 @@ export default new Vuex.Store({
     photoDetails: {}
   },
   mutations: {
-    setSearchQuery(state, query) {
+    setSearchQuery (state, query) {
       state.searchQuery = query
     },
-    setPageNumber(state, page) {
+    setPageNumber (state, page) {
       state.page = page
     },
-    setPhotos(state, data) {
+    setPhotos (state, data) {
       state.photos = data
     },
-    setPhotoDetails(state, data) {
+    setPhotoDetails (state, data) {
       state.photoDetails = data
     },
-    setLoading(state, status) {
+    setLoading (state, status) {
       state.isLoading = status
     },
-    setSearchTotal(state, data) {
+    setSearchTotal (state, data) {
       state.searchTotal = data
     },
-    setError(state, message) {
+    setError (state, message) {
       state.searchQuery = ''
       state.page = 1
       state.isLoading = false
@@ -44,14 +44,15 @@ export default new Vuex.Store({
       state.error = true
       state.errorMessage = message
     },
-    clearError(state) {
+    clearError (state) {
       state.error = false
       state.errorMessage = null
     }
   },
   actions: {
-    async searchPhotos({ commit, state }, payload) {
+    async searchPhotos ({ commit, state }, payload) {
       if (state.error) commit('clearError')
+      if (payload.page === 1) commit('setPhotos', [])
 
       try {
         commit('setLoading', true)
@@ -73,13 +74,13 @@ export default new Vuex.Store({
         if (res) {
           if (payload.page === 1) {
             commit('setPhotos', [])
-            commit('setSearchQuery', payload.searchQuery)
             commit('setPageNumber', payload.page)
             commit('setPhotos', res.data.photos.photo)
           } else {
             commit('setPageNumber', payload.page)
             commit('setPhotos', [...state.photos, ...res.data.photos.photo])
           }
+          commit('setSearchQuery', payload.searchQuery)
           commit('setSearchTotal', res.data.photos.total)
           commit('setLoading', false)
         }
@@ -87,7 +88,7 @@ export default new Vuex.Store({
         commit('setError', error.message)
       }
     },
-    async getPhotoDetails({ commit, state }, payload) {
+    async getPhotoDetails ({ commit, state }, payload) {
       if (state.error) commit('clearError')
       try {
         commit('setLoading', true)
