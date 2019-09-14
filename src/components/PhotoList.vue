@@ -6,14 +6,13 @@
         :key="`${i}-${photo.id}`"
         :photo="photo"/>
     </b-row>
-    <div v-if="isLoading " class="text-center mt-3">
-        <b-spinner  style="width: 3rem; height: 3rem;" label="Large Spinner"></b-spinner>
-    </div>
+    <loading-spinner v-if="isLoading"></loading-spinner>
 </b-container>
 </template>
 
 <script>
 import PhotoItem from '@/components/PhotoItem'
+import LoadingSpinner from '@/components/layout/LoadingSpinner'
 export default {
   name: 'PhotoList',
   props: {
@@ -27,7 +26,8 @@ export default {
     }
   },
   components: {
-    PhotoItem
+    PhotoItem,
+    LoadingSpinner
   }
 }
 </script>

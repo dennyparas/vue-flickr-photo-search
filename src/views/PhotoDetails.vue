@@ -11,30 +11,29 @@
             {{ photoDetails.owner.username }}<br />
             <small class="text-muted"
             >Taken on {{ photoDetails.dates.taken }}</small><br />
-            {{ photoDetails.description._content }}
-
+            <span v-html="photoDetails.description._content"></span>
           </b-card-text>
            <b-card-text>
              <a :href="`${photoDetails.urls.url[0]._content}`" target="_blank"
               >Flickr Image Page <i class="fas fa-external-link-alt"></i
             ></a>
-
           </b-card-text>
           <b-button variant="info" @click="goBack">Go back to search page</b-button>
-
         </b-card>
       </b-col>
     </b-row>
-    <div v-if="isLoading " class="text-center mt-3">
-      <b-spinner  style="width: 3rem; height: 3rem;" label="Large Spinner"></b-spinner>
-    </div>
+    <loading-spinner v-if="isLoading"></loading-spinner>
   </b-container>
 </template>
 
 <script>
 import { mapActions, mapState } from 'vuex'
+import LoadingSpinner from '@/components/layout/LoadingSpinner'
 export default {
   name: 'PhotoDetails',
+  components: {
+    LoadingSpinner
+  },
   computed: {
     ...mapState([
       'isLoading',
