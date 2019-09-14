@@ -6,6 +6,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    searchQuery: '',
+    page: 1,
     photos: [],
     isLoading: false,
     searchTotal: 0,
@@ -14,6 +16,12 @@ export default new Vuex.Store({
     photoDetails: {}
   },
   mutations: {
+    setSearchQuery (state, query) {
+      state.searchQuery = query
+    },
+    setPageNumber (state, page) {
+      state.page = page
+    },
     setPhotos (state, data) {
       state.photos = data
     },
@@ -27,6 +35,8 @@ export default new Vuex.Store({
       state.searchTotal = data
     },
     setError (state, message) {
+      state.searchQuery = ''
+      state.page = 1
       state.isLoading = false
       state.searchTotal = 0
       state.photos = []
@@ -62,8 +72,11 @@ export default new Vuex.Store({
         })
         if (res) {
           if (payload.page === 1) {
+            commit('setSearchQuery', payload.searchQuery)
+            commit('setPageNumber', payload.page)
             commit('setPhotos', res.data.photos.photo)
           } else {
+            commit('setPageNumber', payload.page)
             commit('setPhotos', [...state.photos, ...res.data.photos.photo])
           }
           commit('setSearchTotal', res.data.photos.total)
