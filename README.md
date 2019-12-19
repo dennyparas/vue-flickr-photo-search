@@ -14,7 +14,7 @@ A web app (single page application) created with vue,vuex, bootstrap and bootstr
 
 ## Project setup
 
-for development edit the .env file outside the src folder and your flickr api key
+for development edit the .env file outside the src folder and add your flickr api key
 
 ```
 npm install
